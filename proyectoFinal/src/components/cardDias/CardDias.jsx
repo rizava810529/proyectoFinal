@@ -1,25 +1,56 @@
 import React from 'react';
+import clear from "../../assets/Clear.png";
+import HeavyCloud from "../../assets/HeavyCloud.png";
+import HeavyRain from "../../assets/HeavyRain.png";
+import LightCloud from "../../assets/LightCloud.png";
+import lightRain from "../../assets/LightRain.png";
+import Shower from "../../assets/Shower.png";
+import Sleet from "../../assets/Sleet.png";
+import Snow from "../../assets/Snow.png";
+import Thunderstorm from "../../assets/Thunderstorm.png";
+
+import "../cardDias/CardDias.css"
+
+
 
 const CardDias = ({ forecastData }) => {
-  // Agrupar los datos por día
+  const weatherIcons = {
+    Clear: clear,
+    Clouds: HeavyCloud,
+    Rain: HeavyRain,
+    LightCloud: LightCloud,
+    LightRain: lightRain,
+    Showers: Shower,
+    Sleet: Sleet,
+    Snow: Snow,
+    Thunderstorm: Thunderstorm,
+    
+  };
+
   const groupedForecastData = forecastData.reduce((acc, item) => {
     const date = new Date(item.dt * 1000);
     const dateString = date.toLocaleDateString();
     if (!acc[dateString]) {
-      acc[dateString] = item;
+      acc[dateString] = {
+        ...item,
+        predominantWeather: item.weather[0].main,
+        temperatureCelsius: item.main.temp - 273.15,
+      };
     }
     return acc;
   }, {});
 
   return (
-    <div>
-      <h2>Next 6 Days</h2>
+    <div className='h-100 d-flex justify-content-center align-items-center gap-2'>
       {Object.values(groupedForecastData).map((item, index) => (
-        <div key={index} className="card">
+        <div key={index} className="card" style={{ backgroundColor: '#1E213A' }} >
           <div className="card-body">
-            <h5 className="card-title">Date: {new Date(item.dt * 1000).toLocaleDateString()}</h5>
-            <p className="card-text">Temperature: {item.main.temp} K</p>
-            {/* Agrega más detalles del pronóstico si es necesario */}
+            <h5 className="card-title">{new Date(item.dt * 1000).toLocaleDateString()}</h5>
+            <div >
+              <img  src={weatherIcons[item.predominantWeather]} alt="Weather Icon" style={{ width: '40px', height: '40px' }} />
+            </div>
+            <p className="card-text">{item.predominantWeather}</p>
+            <p className="card-text">{item.temperatureCelsius.toFixed(2)} °C</p>
           </div>
         </div>
       ))}

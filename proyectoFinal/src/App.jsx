@@ -7,6 +7,7 @@ import brujula from './assets/brujula.png';
 import Cloud from './assets/Cloud.png';
 import Shower from './assets/Shower.png'
 import posicion from './assets/posicion.png'
+
 function App() {
   const [weatherData, setWeatherData] = useState({
     city: '',
@@ -38,6 +39,7 @@ function App() {
         wind: data.wind.speed,
         visibility: data.visibility,
         pressure: data.main.pressure,
+        temperature: data.main.temp,
       });
 
       const forecastResponse = await axios.get('https://api.openweathermap.org/data/2.5/forecast', {
@@ -84,10 +86,10 @@ function App() {
   const dia = fechaActual.getDate();
 
   const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
-
+  const celsiusTemperature = (weatherData.temperature - 273.15).toFixed(1);
   return (
-    <div className="App">
-      <div className="input-container mt-5">
+    <div className="App  ">
+      <div className="input-container mt-3">
         <div className="input-group">
           <input
             type="text"
@@ -106,95 +108,101 @@ function App() {
       </div>
       <div className="mt-4">
         <CardWeather weatherData={weatherData} />
-        <CardDias forecastData={forecastData} />
+
       </div>
 
+      {/* front  */}
 
+      <div className='h-100 d-flex justify-content-center align-items-center '>
 
+        <div className='container  h-100'>
 
-      <div className='container '>
-
-        <div >
-          <div className='d-flex justify-content-between align-items-center  m-4'>
-            <div className=' p-3'>
-              <button className='btn'>Search for places</button></div>
-            <div>
-              <img src={brujula} alt="Ejemplo" width={50} /></div>
+          <div >
+            <div className='d-flex justify-content-between align-items-center  m-4'>
+              <div className=' p-3'>
+                <button className='btn'>Search for places</button></div>
+              <div>
+                <img src={brujula} alt="Ejemplo" width={50} /></div>
+            </div>
+            <div className='background-div'>
+              <img src={Shower} alt="Shower" width={300} className='' /></div>
           </div>
-          <div className='background-div'>
-            <img src={Shower} alt="Shower" width={300} className='' /></div>
-        </div>
-        <div className='text  m-5'>
-          15°C
-        </div>
-        <div className='text1 m-3'>
-          <p>Shower</p>
-        </div>
-        <div class="text-white m-3">
-          <p>Today: {fechaFormateada}</p>
-        </div>
-        <div className='d-flex justify-content-center align-items-center'>
-          <div d-flex justify-content-center align-items-center>
-            <img src={posicion} alt="Ejemplo" width={20}></img>
-          </div>
-          <div className='text-white m-3'>
-            <p>Helsinki</p>
-          </div>
-        </div>
-        
-      </div>
-
-      <div className='col-md-9'>
-        <div className=''>
-          <div className=''>
-
-          </div>
+          <div className='text  m-5'>
           <div>
+          <p className="card-text" >{celsiusTemperature}°C</p>
+        </div>
+          </div>
+          <div className='text1 m-3'>
+            <p>Shower</p>
+          </div>
+          <div class="text-white m-3">
+            <p>Today: {fechaFormateada}</p>
+          </div>
+          <div className='d-flex justify-content-center align-items-center'>
+            <div d-flex justify-content-center align-items-center>
+              <img src={posicion} alt="Ejemplo" width={20}></img>
+            </div>
+            <div className='text-white m-3'>
+              <p>Berlin</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div className='container2 h-100'>
+
+          <div className='h-100 d-flex flex-column justify-content-center gap-3'>
+
+            <div className='d-flex justify-content-end align-items-center'>
+              <button className='btn-circle m-3'>°C</button>
+              <button className='btn-circle'>°F</button>
+            </div>
+
+            <div className='m-3'>
+              <CardDias forecastData={forecastData} />
+            </div>
+            <div>
+              <h1 className='text-white  d-flex justify-content-start align-items-center m-3' m-5>Today's Hightlights</h1>
+            </div>
+
+            <div className='h-100 d-flex justify-content-center align-items-center' >
+              <div className='border m-3' style={{ backgroundColor: '#1E213A' , width: '50%', height: '65px'}} >
+                <p className="card-text text-white h-100 d-flex justify-content-center align-items-center">Humidity: {weatherData.humidity}%</p>
+              </div>
+              <div className='border  m-3 text-white d-flex justify-content-center align-items-center' style={{ backgroundColor: '#1E213A',width: '50%', height: '65px' }} >
+                <p className="card-text">Wind Status: {weatherData.wind} m/s</p>
+              </div>
+            </div>
+
+
+            <div className='h-100 d-flex justify-content-center align-items-center'>
+              <div className='border fondo-2 m-3 text-white d-flex justify-content-center align-items-center' style={{ backgroundColor: '#1E213A', width: '50%', height: '40px' }}>
+                <p className="card-text text-white">Visibility: {weatherData.visibility} meters</p>
+              </div>
+              <div className='border fondo-2 m-3 text-white d-flex justify-content-center align-items-center' style={{ backgroundColor: '#1E213A', width: '50%', height: '40px' }}>
+                <p className="card-text">Air Pressure: {weatherData.pressure} hPa</p>
+              </div>
+            </div>
 
           </div>
+
+          <div className='h-100 d-flex justify-content-center align-items-center'>
+            <p>createc by username-devChallengues.io</p>
+          </div>
+
         </div>
-        <div className=''>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div></div>
-        <div></div>
-        <div></div>
+
+
+
+
+
       </div>
-
-
-
-
-
-
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   );
 }
+
+
+
+
 
 export default App;
