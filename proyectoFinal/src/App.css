@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,70 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.container {
+  width: '459px';
+  height: '1023px';
+  background-color: #1E213A;
+}
+
+.btn {
+  color: white;
+  background-color: #6E707A;
+  /* Color de fondo */
+
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: Raleway;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-transform: lowercase;
+}
+
+.btn::first-letter {
+  text-transform: uppercase;
+  /* Primera letra en mayúscula */
+}
+
+
+.background-div {
+
+  background-image: url('./assets/Cloud.png');
+  /* Ruta de la imagen */
+  background-size: cover;
+  background-position: center;
+
+}
+
+.text {
+  color: white;
+
+  width: 192px;
+  height: 169px;
+  top: 512px;
+  left: 124px;
+  font-size: 50px;
+  display: contents;
+  align-items: center;
+  align-content: center;
+
+}
+
+.text1 {
+  font-size: 30px;
+  width: 129px;
+  height: 42px;
+  top: 768px;
+  left: 75px;
+  background-color: #1E213A;
+  color: white;
+  display: contents;
+  align-items: center;
+  align-content: center;
 }
