@@ -11,6 +11,7 @@ import Ciudad from '../src/components/ciudad/Ciudad'
 import LeftSection from './components/leftSeccion/LeftSeccion';
 
 function App() {
+  /* Este estado almacena los datos meteorológicos actuales, como ciudad, país, humedad, viento, visibilidad y presión. Se inicializa con valores vacíos. */
   const [weatherData, setWeatherData] = useState({
     city: '',
     country: '',
@@ -21,25 +22,27 @@ function App() {
 
 
   });
-
+/* Se llama cuando el usuario hace clic en el botón de búsqueda. Llama a fetchData con la ciudad ingresada y luego limpia el campo de entrada. */
   const handleFetchWeather = () => {
     if (inputCity.trim() !== '') {
       fetchData(inputCity);
       setInputCity(''); // limpiar el imput
     }
   };
-
+/* Almacena los datos del pronóstico meteorológico para los próximos seis días. */
   const [forecastData, setForecastData] = useState([]);
-
+/*  Guarda el valor del input donde el usuario puede ingresar el nombre de la ciudad para obtener la información climática. */
   const [inputCity, setInputCity] = useState('');
-
+/* Almacena las búsquedas anteriores de los usuarios. */
   const [previousSearches, setPreviousSearches] = useState([]);
-
+/* Determina si mostrar el campo de búsqueda de ciudad. */
   const [showSearchInput, setShowSearchInput] = useState(false);
-
+/* Controla si mostrar la sección de la izquierda o los detalles de la ciudad. */
   const [showLeftSection, setShowLeftSection] = useState(true);
 
-
+  /* 
+  Esta función hace solicitudes a la API de OpenWeatherMap para obtener información climática actual y pronósticos futuros. Luego, actualiza los estados weatherData, forecastData y previousSearches con los datos obtenidos.
+  */
   const fetchData = async (city) => {
     try {
       const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
@@ -84,18 +87,18 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
-
+/* Se utiliza un efecto useEffect para hacer una solicitud inicial de datos climáticos cuando la aplicación se carga por primera vez. Esto se realiza llamando a la función fetchData con el valor inicial 'berlin'. */
   useEffect(() => {
     fetchData('berlin');
   }, []);
-
+/*  Maneja el cambio en el campo de entrada de la ciudad y actualiza el estado inputCity */
   const handleCityChange = (event) => {
     setInputCity(event.target.value);
   };
 
 
 
-
+/* obtenemos la fecha actualzada  */
   const fechaActual = new Date();
 
   const año = fechaActual.getFullYear();
@@ -105,9 +108,9 @@ function App() {
   const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
   const celsiusTemperature = (weatherData.temperature - 273.15).toFixed(1);
 
-
+// Ocultar el componente LeftSection
   const handleSearchClick = () => {
-    setShowLeftSection(false); // Ocultar el componente LeftSection
+    setShowLeftSection(false); 
   };
 
 
