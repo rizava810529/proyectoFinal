@@ -21,7 +21,7 @@ function Ciudad({ inputCity, handleCityChange, handleFetchWeather, celsiusTemper
       </div>
       <div className="mt-4">
        
-        <p>Today: {fechaFormateada}</p>
+        <p>Visualizando pronostico de la ciudad de:</p>
         <div className='d-flex justify-content-center align-items-center'>
           <div>
             <p>{weatherData.city}</p>

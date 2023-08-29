@@ -17,12 +17,14 @@ function App() {
     wind: '',
     visibility: '',
     pressure: '',
+
+
   });
 
   const handleFetchWeather = () => {
-    if (inputCity.trim() !== '') { // Check if input is not empty or only whitespace
+    if (inputCity.trim() !== '') {
       fetchData(inputCity);
-      setInputCity(''); // Clear the input field
+      setInputCity(''); // limpiar el imput
     }
   };
 
@@ -103,15 +105,15 @@ function App() {
   const handleSearchClick = () => {
     setShowSearchInput(!showSearchInput);
   };
-  
 
 
 
 
-  
+
+
   return (
     <div className="App  ">
-      
+
       <Ciudad
         inputCity={inputCity}
         handleCityChange={handleCityChange}
@@ -120,13 +122,13 @@ function App() {
         fechaFormateada={fechaFormateada}
         weatherData={weatherData}
         previousSearches={previousSearches}
-      />
+      ></Ciudad>
 
-      {/* front  */}
-      {/* parte izquierda */}
-      <div className='h-100 d-flex justify-content-center align-items-center '>
 
-        <div className='container  h-100'>
+      <div className='d-flex justify-content-between align-items-center '>
+
+        {/*parte izquierda */}
+        <div className='container' style={{ width: '50%', height: '790px' }}>
 
           <div >
             <div className='d-flex justify-content-between align-items-center  m-4'>
@@ -139,18 +141,18 @@ function App() {
               <img src={Shower} alt="Shower" width={300} className='' /></div>
           </div>
           <div className='text  m-5'>
-          <div>
-          <p className="card-text" >{celsiusTemperature}°C</p>
-        </div>
+            <div>
+              <p className="card-text" >{celsiusTemperature}°C</p>
+            </div>
           </div>
           <div className='text1 m-3'>
             <p>Shower</p>
           </div>
-          <div class="text-white m-3">
+          <div className="text-white m-3">
             <p>Today: {fechaFormateada}</p>
           </div>
           <div className='d-flex justify-content-center align-items-center'>
-            <div d-flex justify-content-center align-items-center>
+            <div className="d-flex justify-content-center align-items-center">
               <img src={posicion} alt="Ejemplo" width={20}></img>
             </div>
             <div className='text-white m-3'>
@@ -159,6 +161,8 @@ function App() {
           </div>
 
         </div>
+        {/* end parte izquierda */}
+
         {/* parte derecha */}
         <div className='container2 h-100'>
 
@@ -173,15 +177,27 @@ function App() {
               <CardDias forecastData={forecastData} />
             </div>
             <div>
-              <h1 className='text-white  d-flex justify-content-start align-items-center m-3' m-5>Today's Hightlights</h1>
+              <h1 className='text-white  d-flex justify-content-start align-items-center m-3 m-5'>Today's Hightlights</h1>
             </div>
 
             <div className='h-100 d-flex justify-content-center align-items-center' >
-              <div className='border m-3' style={{ backgroundColor: '#1E213A' , width: '50%', height: '65px'}} >
-                <p className="card-text text-white h-100 d-flex justify-content-center align-items-center">Humidity: {weatherData.humidity}%</p>
-              </div>
-              <div className='border  m-3 text-white d-flex justify-content-center align-items-center' style={{ backgroundColor: '#1E213A',width: '50%', height: '65px' }} >
+
+              <div className='border  m-3 text-white d-flex justify-content-center align-items-center' style={{ backgroundColor: '#1E213A', width: '50%', height: '65px' }} >
                 <p className="card-text">Wind Status: {weatherData.wind} m/s</p>
+              </div>
+              <div className='border m-3' style={{ backgroundColor: '#1E213A', width: '50%', height: '65px' }} >
+                <div>
+                  <p className="card-text text-white h-100 d-flex justify-content-center align-items-center">Humidity: {weatherData.humidity}% </p>
+                </div>
+
+                <div className='m-1'>
+                  <div class="progress" style={{ height: '20px' }}>
+                    <div class="progress-bar" role="progressbar" style={{ width: `${(weatherData.humidity / 100) * 100}%` }} aria-valuenow={weatherData.humidity} aria-valuemin="0" aria-valuemax="100">
+                      {weatherData.humidity}%
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
 
@@ -204,11 +220,15 @@ function App() {
         </div>
 
 
-
-
-
       </div>
+
+
+
+
+
+
     </div>
+
   );
 }
 
