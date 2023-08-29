@@ -41,7 +41,7 @@ const CardDias = ({ forecastData }) => {
   }, {});
 
   return (
-    <div className='h-100 d-flex justify-content-center align-items-center gap-2'>
+    <div className='h-100 d-flex justify-content-center align-items-center gap-2 text-white'>
       {Object.values(groupedForecastData).map((item, index) => (
         <div key={index} className="card" style={{ backgroundColor: '#1E213A' }} >
           <div className="card-body">

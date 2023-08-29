@@ -8,6 +8,7 @@ import Cloud from './assets/Cloud.png';
 import Shower from './assets/Shower.png'
 import posicion from './assets/posicion.png'
 import Ciudad from '../src/components/ciudad/Ciudad'
+import LeftSection from './components/leftSeccion/LeftSeccion';
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -34,8 +35,9 @@ function App() {
 
   const [previousSearches, setPreviousSearches] = useState([]);
 
-  const [showSearchInput, setShowSearchInput] = useState(false); // Agrega esta variable de estado
+  const [showSearchInput, setShowSearchInput] = useState(false);
 
+  const [showLeftSection, setShowLeftSection] = useState(true);
 
 
   const fetchData = async (city) => {
@@ -102,10 +104,11 @@ function App() {
 
   const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
   const celsiusTemperature = (weatherData.temperature - 273.15).toFixed(1);
-  const handleSearchClick = () => {
-    setShowSearchInput(!showSearchInput);
-  };
 
+
+  const handleSearchClick = () => {
+    setShowLeftSection(false); // Ocultar el componente LeftSection
+  };
 
 
 
@@ -114,55 +117,23 @@ function App() {
   return (
     <div className="App  ">
 
-      <Ciudad
-        inputCity={inputCity}
-        handleCityChange={handleCityChange}
-        handleFetchWeather={handleFetchWeather}
-        celsiusTemperature={celsiusTemperature}
-        fechaFormateada={fechaFormateada}
-        weatherData={weatherData}
-        previousSearches={previousSearches}
-      ></Ciudad>
 
 
       <div className='d-flex justify-content-between align-items-center '>
-
-        {/*parte izquierda */}
-        <div className='container' style={{ width: '50%', height: '790px' }}>
-
-          <div >
-            <div className='d-flex justify-content-between align-items-center  m-4'>
-              <div className=' p-3'>
-                <button className='btn'>Search for places</button></div>
-              <div>
-                <img src={brujula} alt="Ejemplo" width={50} /></div>
-            </div>
-            <div className='background-div'>
-              <img src={Shower} alt="Shower" width={300} className='' /></div>
-          </div>
-          <div className='text  m-5'>
-            <div>
-              <p className="card-text" >{celsiusTemperature}°C</p>
-            </div>
-          </div>
-          <div className='text1 m-3'>
-            <p>Shower</p>
-          </div>
-          <div className="text-white m-3">
-            <p>Today: {fechaFormateada}</p>
-          </div>
-          <div className='d-flex justify-content-center align-items-center'>
-            <div className="d-flex justify-content-center align-items-center">
-              <img src={posicion} alt="Ejemplo" width={20}></img>
-            </div>
-            <div className='text-white m-3'>
-              <p>Berlin</p>
-            </div>
-          </div>
-
-        </div>
-        {/* end parte izquierda */}
-
+        {showLeftSection ? (
+          <LeftSection celsiusTemperature={celsiusTemperature} fechaFormateada={fechaFormateada} handleSearchClick={handleSearchClick} />
+        ) : (
+          <Ciudad
+            inputCity={inputCity}
+            handleCityChange={handleCityChange}
+            handleFetchWeather={handleFetchWeather}
+            celsiusTemperature={celsiusTemperature}
+            fechaFormateada={fechaFormateada}
+            weatherData={weatherData}
+            previousSearches={previousSearches}
+            
+          />
+        )}
         {/* parte derecha */}
         <div className='container2 h-100'>
 
@@ -191,8 +162,8 @@ function App() {
                 </div>
 
                 <div className='m-1'>
-                  <div class="progress" style={{ height: '20px' }}>
-                    <div class="progress-bar" role="progressbar" style={{ width: `${(weatherData.humidity / 100) * 100}%` }} aria-valuenow={weatherData.humidity} aria-valuemin="0" aria-valuemax="100">
+                  <div className="progress" style={{ height: '20px' }}>
+                    <div className="progress-bar" role="progressbar" style={{ width: `${(weatherData.humidity / 100) * 100}%` }} aria-valuenow={weatherData.humidity} aria-valuemin="0" aria-valuemax="100">
                       {weatherData.humidity}%
                     </div>
                   </div>
@@ -221,7 +192,7 @@ function App() {
 
 
       </div>
-
+      {/* end parte derecha */}
 
 
 
