@@ -7,6 +7,7 @@ import brujula from './assets/brujula.png';
 import Cloud from './assets/Cloud.png';
 import Shower from './assets/Shower.png'
 import posicion from './assets/posicion.png'
+import Ciudad from '../src/components/ciudad/Ciudad'
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -18,9 +19,22 @@ function App() {
     pressure: '',
   });
 
+  const handleFetchWeather = () => {
+    if (inputCity.trim() !== '') { // Check if input is not empty or only whitespace
+      fetchData(inputCity);
+      setInputCity(''); // Clear the input field
+    }
+  };
+
   const [forecastData, setForecastData] = useState([]);
 
   const [inputCity, setInputCity] = useState('');
+
+  const [previousSearches, setPreviousSearches] = useState([]);
+
+  const [showSearchInput, setShowSearchInput] = useState(false); // Agrega esta variable de estado
+
+
 
   const fetchData = async (city) => {
     try {
@@ -59,6 +73,7 @@ function App() {
         return differenceInDays >= 1 && differenceInDays <= 6;
       });
 
+      setPreviousSearches(prevSearches => [data.name, ...prevSearches]);
       setForecastData(nextSixDays);
 
     } catch (error) {
@@ -74,9 +89,7 @@ function App() {
     setInputCity(event.target.value);
   };
 
-  const handleFetchWeather = () => {
-    fetchData(inputCity);
-  };
+
 
 
   const fechaActual = new Date();
@@ -87,32 +100,30 @@ function App() {
 
   const fechaFormateada = `${año}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
   const celsiusTemperature = (weatherData.temperature - 273.15).toFixed(1);
+  const handleSearchClick = () => {
+    setShowSearchInput(!showSearchInput);
+  };
+  
+
+
+
+
+  
   return (
     <div className="App  ">
-      <div className="input-container mt-3">
-        <div className="input-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter city"
-            value={inputCity}
-            onChange={handleCityChange}
-          />
-          <button
-            className="btn btn-primary"
-            onClick={handleFetchWeather}
-          >
-            Send
-          </button>
-        </div>
-      </div>
-      <div className="mt-4">
-        <CardWeather weatherData={weatherData} />
-
-      </div>
+      
+      <Ciudad
+        inputCity={inputCity}
+        handleCityChange={handleCityChange}
+        handleFetchWeather={handleFetchWeather}
+        celsiusTemperature={celsiusTemperature}
+        fechaFormateada={fechaFormateada}
+        weatherData={weatherData}
+        previousSearches={previousSearches}
+      />
 
       {/* front  */}
-
+      {/* parte izquierda */}
       <div className='h-100 d-flex justify-content-center align-items-center '>
 
         <div className='container  h-100'>
@@ -148,14 +159,14 @@ function App() {
           </div>
 
         </div>
-
+        {/* parte derecha */}
         <div className='container2 h-100'>
 
           <div className='h-100 d-flex flex-column justify-content-center gap-3'>
 
-            <div className='d-flex justify-content-end align-items-center'>
+            <div className='d-flex justify-content-end align-items-center '>
               <button className='btn-circle m-3'>°C</button>
-              <button className='btn-circle'>°F</button>
+              <button className='btn-circle m-3'>°F</button>
             </div>
 
             <div className='m-3'>
