@@ -5,7 +5,7 @@ function Ciudad({ inputCity, handleCityChange, handleFetchWeather, celsiusTemper
     return (
         
         <div className='gap-3'>
-            <div className="input-container text-white p-3" style={{ backgroundColor: '#1E213A', width: '400px', height: '791px' }}>
+            <div className="input-container text-white p-3" style={{ backgroundColor: '#1E213A', width: '400px', height: '775px' }}>
             <div className="input-group">
                 <input
                     type="text"
@@ -40,6 +40,14 @@ function Ciudad({ inputCity, handleCityChange, handleFetchWeather, celsiusTemper
                     </div>
                 </div>
             )}
+
+
+
+
+
+
+
+            
         </div>
 
 
